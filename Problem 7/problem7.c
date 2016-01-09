@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+#define NTH_PRIME   10001
+
+/* Project Euler Problem 7
+By listing the first six prime numbers:
+2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+
+What is the 10,001st prime number? */
+int main()
+{
+    double timeTaken;
+    clock_t start, end;
+    start = clock();
+
+    int primes[NTH_PRIME];
+    primes[0] = 2;
+    primes[1] = 3;
+    int primeCount = 2;
+
+    int number = primes[primeCount - 1];
+    int primeFound;
+
+    while(primeCount <= NTH_PRIME)
+    {
+        number += 2;
+        primeFound = 1;
+        int i;
+        for(i = 0; primes[i] <= number / 2; ++i)
+        {
+            if(number % primes[i] == 0)
+            {
+                primeFound = 0;
+                break;
+            }
+        }
+
+        if(primeFound)
+        {
+            primes[primeCount++] = number;
+        }
+    }
+
+    printf("The 10,001st prime is %d.\n", primes[NTH_PRIME - 1]);
+
+    end = clock();
+    timeTaken = (double)(end - start) / CLOCKS_PER_SEC;
+    printf("Start: %f\n", (double)start / CLOCKS_PER_SEC);
+    printf("End: %f\n", (double)end / CLOCKS_PER_SEC);
+    printf("Program execution time took %f seconds.\n", timeTaken);
+
+    return 0;
+}
